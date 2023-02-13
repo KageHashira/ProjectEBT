@@ -8,11 +8,13 @@ public class EnemyAI : MonoBehaviour
     public Transform[] waypoints;
     int waypointIndex;
     Vector3 target;
+    
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         UpdateDestination();
+        
     }
 
     // Update is called once per frame
@@ -23,6 +25,7 @@ public class EnemyAI : MonoBehaviour
             IterateWaypointIndex();
             UpdateDestination();
         }
+        
     }
     void UpdateDestination()
     {
