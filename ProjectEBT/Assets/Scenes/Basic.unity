@@ -509,7 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 7
-  speed: 1
+  speed: 2
 --- !u!195 &1442162040
 NavMeshAgent:
   m_ObjectHideFlags: 0
