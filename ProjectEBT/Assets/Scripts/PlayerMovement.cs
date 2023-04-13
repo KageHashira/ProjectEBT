@@ -1,9 +1,13 @@
 using System;
 using UnityEngine;
+using System.Collections;
+
 
 public class PlayerMovement : MonoBehaviour
 {
-    
+
+    //variables
+    public static Vector3 playerPos;
 
     //Assingables
     public Transform playerCam;
@@ -57,8 +61,19 @@ public class PlayerMovement : MonoBehaviour
         playerScale = transform.localScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        StartCoroutine(TrackPlayer());
     }
 
+     IEnumerator TrackPlayer()
+    {
+        while (true)
+        {
+            playerPos = gameObject.transform.position;
+            yield return null;
+
+        }
+    }
 
     private void FixedUpdate()
     {
