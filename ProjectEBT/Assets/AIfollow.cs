@@ -91,6 +91,10 @@ public class AIfollow : MonoBehaviour
                 ChasePlayer();
 
             }
+            else if(playerIsInLOS == false)
+            {
+                Patrol();
+            }
         }
     }
 
