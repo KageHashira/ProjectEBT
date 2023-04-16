@@ -31,6 +31,17 @@ public class AIfollow : MonoBehaviour
     //AI strafe 
     public float distToPlayer = 5.0f; // straferadius
 
+    private float randomStrafeStartTime;
+    private float waitStrafeTime;
+    public float t_minStrafe;
+    public float t_maxStrafe;
+
+    public Transform strafeRight;
+    public Transform strafeLeft;
+    private int randomStrafeDir;
+
+
+
    
 
 
@@ -91,7 +102,7 @@ public class AIfollow : MonoBehaviour
                 ChasePlayer();
 
             }
-            else if(playerIsInLOS == false)
+            else 
             {
                 Patrol();
             }
@@ -158,6 +169,30 @@ public class AIfollow : MonoBehaviour
             nav.SetDestination(PlayerMovement.playerPos);
 
         }
+        else if(nav.isActiveAndEnabled && distance <= distToPlayer)
+        {
+            randomStrafeDir = Random.Range(0, 2);
+            randomStrafeStartTime = Random.Range(t_minStrafe, t_maxStrafe);
+
+            if(waitStrafeTime <= 0)
+            {
+                if(randomStrafeDir == 0)
+                {
+                    nav.SetDestination(strafeLeft.position);
+                }
+                else if(randomStrafeDir == 1)
+                {
+                    nav.SetDestination(strafeRight.position);
+
+                }
+                waitStrafeTime = randomStrafeStartTime;
+
+            }
+            else
+            {
+                waitStrafeTime -= Time.deltaTime;
+            }
+        }
         
 
     }
@@ -166,6 +201,7 @@ public class AIfollow : MonoBehaviour
     {
         Vector3 direction = (PlayerMovement.playerPos - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * facePlayerFactor);
 
     }
 }
