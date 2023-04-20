@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIfollow : MonoBehaviour
+public class followPlayer : MonoBehaviour
 {
     //ai sight 
     public bool playerIsInLOS = false;
@@ -15,7 +15,7 @@ public class AIfollow : MonoBehaviour
     public float memoryStartTime = 10f;
     private float increasingMemoryTime;
 
-        
+
 
 
     //patrolling randomly between waypoints 
@@ -42,7 +42,7 @@ public class AIfollow : MonoBehaviour
 
 
 
-   
+
 
 
     //when to chase player 
@@ -82,27 +82,27 @@ public class AIfollow : MonoBehaviour
         }*/
 
         float distance = Vector3.Distance(PlayerMovement.playerPos, transform.position);
-        if(distance <= losRadius)
+        if (distance <= losRadius)
         {
             CheckLOS();
         }
-        
-        if(nav.isActiveAndEnabled)
+
+        if (nav.isActiveAndEnabled)
         {
-            if(playerIsInLOS == false)
+            if (playerIsInLOS == false)
             {
                 Patrol();
 
             }
-            else if(playerIsInLOS == true)
+            else if (playerIsInLOS == true)
             {
-                
+
 
                 FacePlayer();
                 ChasePlayer();
 
             }
-            else 
+            else
             {
                 Patrol();
             }
@@ -114,17 +114,17 @@ public class AIfollow : MonoBehaviour
         Vector3 direction = PlayerMovement.playerPos - transform.position;
         float angle = Vector3.Angle(direction, transform.forward);
 
-        if (angle < fieldOfViewAngle*0.5f)
+        if (angle < fieldOfViewAngle * 0.5f)
         {
             RaycastHit hit;
 
             if (Physics.Raycast(transform.position, direction.normalized, out hit, losRadius))
             {
-                if(hit.collider.tag == "Player")
+                if (hit.collider.tag == "Player")
                 {
                     playerIsInLOS = true;
 
-                    
+
                 }
                 else
                 {
@@ -135,10 +135,10 @@ public class AIfollow : MonoBehaviour
 
         }
 
-        
 
-        
-        
+
+
+
     }
 
     void Patrol()
@@ -169,18 +169,18 @@ public class AIfollow : MonoBehaviour
             nav.SetDestination(PlayerMovement.playerPos);
 
         }
-        else if(nav.isActiveAndEnabled && distance <= distToPlayer)
+        else if (nav.isActiveAndEnabled && distance <= distToPlayer)
         {
             randomStrafeDir = Random.Range(0, 2);
             randomStrafeStartTime = Random.Range(t_minStrafe, t_maxStrafe);
 
-            if(waitStrafeTime <= 0)
+            if (waitStrafeTime <= 0)
             {
-                if(randomStrafeDir == 0)
+                if (randomStrafeDir == 0)
                 {
                     nav.SetDestination(strafeLeft.position);
                 }
-                else if(randomStrafeDir == 1)
+                else if (randomStrafeDir == 1)
                 {
                     nav.SetDestination(strafeRight.position);
 
@@ -193,7 +193,7 @@ public class AIfollow : MonoBehaviour
                 waitStrafeTime -= Time.deltaTime;
             }
         }
-        
+
 
     }
 
